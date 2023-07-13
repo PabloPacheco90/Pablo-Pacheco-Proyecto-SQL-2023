@@ -1,7 +1,9 @@
+-- creacion y seleccion schema --
 Create schema Pacheco_Records;
 
 use Pacheco_records;
 
+-- Creacion de tablas -- 
 create table Paises
 (
 PAIS_ID	INT	,
@@ -126,8 +128,8 @@ PRIMARY KEY(ID_SKU),
 FOREIGN KEY(ID_MERCH) REFERENCES Merch(MERCH_ID)
 );
 
--- OrdenCSV:Generos-Paises-Localidad-Artist-Itemclass-Catalogo-ProductoClass-Merch-concerts-eventclass-EVENT_PROM-ventas_Unidades
 
+-- Insercion datos , formateados en excel , subidos por insercion manual --  
 
 
 INSERT INTO Generos
@@ -471,50 +473,20 @@ BEGIN
   END IF ;
 END; $$
 
--- El artista 51 tiene un contrato de $ 10.695 se intenta aumentarlo y posterior se reduce a la mitad --
-
-UPDATE artist
-SET ART_CONT_VAL= 10800 WHERE ART_ID=51;
-
-select * from artist
-
-UPDATE artist
-SET ART_CONT_VAL= 5800 WHERE ART_ID=51;
-
-select * from artist
-
 -- Fin Trigger 2  --
 
 -- Creacion Usuarios -- 
-use mysql
-show tables
-select * from user
-
-show variables like 'validate_password%'
-
--- Usuario que puede leer todas las tablas de mi esquema -- 
-
-create user Menganito@pachecorecords identified by '123456';
-grant select on pacheco_records.* to Menganito@pachecorecords
-show grants for Menganito@pachecorecords
+-- Usuario que puede leer todas las tablas de mi esquema  --
+-- create user Menganito@pachecorecords identified by '123456'; grant select on pacheco_records.* to Menganito@pachecorecords; --
 
 -- Usuario que puede leer , insertar y modificar todas las tablas de mi esquema -- 
-
-create user Fulanito@pachecorecords identified by '789123';
-grant select,insert,update on pacheco_records.* to Fulanito@pachecorecords
-show grants for Fulanito@pachecorecords
+-- create user Fulanito@pachecorecords identified by '789123'; grant select,insert,update on pacheco_records.* to Fulanito@pachecorecords; --
 
 -- Fin Creacion usuarios -- 
 
--- TCL Tabla 1 Artist--
+-- TCL Tabla 1 Artist
 
-START TRANSACTION;
-
-DELETE FROM artist
-WHERE ART_ID=51;
-
--- ROLLBACK --
--- COMMIT --
+-- START TRANSACTION; DELETE FROM artist WHERE ART_ID=51;  ROLLBACK COMMIT --
 
 -- INSERT INTO Artist (ART_ID,ART_NOM,ART_NAC,ART_GEN,ART_CONT_VAL) VALUES(51,'Elmatounpoliciamotorizado',8,1,10695); --
 
@@ -534,3 +506,4 @@ INSERT INTO generos VALUES (18,'FOLKLORE');
 SAVEPOINT Segunda_carga;
 COMMIT
 -- RELEASE Primera_carga --
+-- Fin Proyecto --
